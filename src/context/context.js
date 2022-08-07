@@ -48,8 +48,8 @@ const GithubProvider = ({children}) => {
         setLoading(false)
         setGithubUser(response.data)  
         console.log(response.data) 
-        getReposAndFollowers(githubUser.login)
-       
+        getReposAndFollowers(user)
+       console.log(user)
     } catch (error) {
         errorToggle(true,'there is no user with that name')
     }
@@ -59,6 +59,7 @@ const GithubProvider = ({children}) => {
   }
 
   const getReposAndFollowers = async(userName)=>{
+    console.log(userName)
     const repoURL = `${rootUrl}/users/${userName}/repos?per_page=100`
     const followersURL = `${rootUrl}/users/${userName}/followers`
     try {
@@ -77,10 +78,10 @@ const GithubProvider = ({children}) => {
             if(repos.status== status){
                 
                 setRepos(repos.value.data)
-            } 
-            if (followers.status == 0){
+              } 
+            if (followers.status == status){
+            setGithubFollowers(followers.value.data)
 
-                setGithubFollowers(followers.value.data)
             }
         })
     } catch (error) {
